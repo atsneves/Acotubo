@@ -19,7 +19,20 @@
 	<key>OpenAllWhitelistURLsInWebView</key>
 	<false/>
 	<key>ExternalHosts</key>
-	<array/>
+	<array>
+		<string>www.facebook.com</string>
+		<string>www.acotubo.com.br</string>
+		<string>www.amorcanino.com.br</string>
+		<string>br.linkedin.com</string>
+		<string>www.twitter.com</string>
+		<string>www.youtube.com</string>
+		<string>http://www.youtube.com</string>
+		<string>http://br.linkedin.com</string>
+		<string>http://www.facebook.com</string>
+		<string>http://www.twitter.com</string>
+		<string>http://www.acotubo.com.br</string>
+		<string>http://www.amorcanino.com.br</string>
+	</array>
 	<key>Plugins</key>
 	<dict>
 		<key>com.phonegap.accelerometer</key>

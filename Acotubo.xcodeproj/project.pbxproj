@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BAA5CBD14E0FAC9004F6291 /* ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BAA5CBC14E0FAC9004F6291 /* ipad.png */; };
 		8BD16FF414E0F00500B472F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD16FF314E0F00500B472F4 /* Foundation.framework */; };
 		8BD16FF614E0F00500B472F4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD16FF514E0F00500B472F4 /* UIKit.framework */; };
 		8BD16FF814E0F00500B472F4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD16FF714E0F00500B472F4 /* CoreGraphics.framework */; };
@@ -35,10 +36,17 @@
 		8BD1703414E0F00500B472F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1703314E0F00500B472F4 /* AppDelegate.m */; };
 		8BD1703714E0F00500B472F4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1703614E0F00500B472F4 /* MainViewController.m */; };
 		8BD1703914E0F00500B472F4 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD1703814E0F00500B472F4 /* MainViewController.xib */; };
+		8BD1704214E0F09A00B472F4 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 8BD1704114E0F09A00B472F4 /* www */; };
+		8BD1704414E0F19200B472F4 /* iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD1704314E0F19200B472F4 /* iphone.png */; };
+		8BD1704614E0F19A00B472F4 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD1704514E0F19A00B472F4 /* icon1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8BD16FEF14E0F00500B472F4 /* Acotubo3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acotubo3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BAA5CAD14E0F397004F6291 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = /Users/andersonneves/Documents/ACOTUBO3/Acotubo3/Acotubo3/pt.lproj/Localizable.strings; sourceTree = "<absolute>"; };
+		8BAA5CAE14E0F397004F6291 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = /Users/andersonneves/Documents/ACOTUBO3/Acotubo3/Acotubo3/pt.lproj/Localizable.strings; sourceTree = "<absolute>"; };
+		8BAA5CAF14E0F397004F6291 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = /Users/andersonneves/Documents/ACOTUBO3/Acotubo3/Acotubo3/pt.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
+		8BAA5CBC14E0FAC9004F6291 /* ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad.png; sourceTree = "<group>"; };
+		8BD16FEF14E0F00500B472F4 /* Acotubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acotubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD16FF314E0F00500B472F4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8BD16FF514E0F00500B472F4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8BD16FF714E0F00500B472F4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -52,10 +60,10 @@
 		8BD1700714E0F00500B472F4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8BD1700914E0F00500B472F4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8BD1700B14E0F00500B472F4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		8BD1700F14E0F00500B472F4 /* Acotubo3-Info.plist */ = {isa = PBXFileReference; path = "Acotubo3-Info.plist"; sourceTree = "<group>"; };
+		8BD1700F14E0F00500B472F4 /* Acotubo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Acotubo-Info.plist"; sourceTree = "<group>"; };
 		8BD1701114E0F00500B472F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8BD1701314E0F00500B472F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8BD1701514E0F00500B472F4 /* Acotubo3-Prefix.pch */ = {isa = PBXFileReference; path = "Acotubo3-Prefix.pch"; sourceTree = "<group>"; };
+		8BD1701514E0F00500B472F4 /* Acotubo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Acotubo-Prefix.pch"; sourceTree = "<group>"; };
 		8BD1701614E0F00500B472F4 /* PhoneGap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhoneGap.framework; path = /Users/Shared/PhoneGap/Frameworks/PhoneGap.framework; sourceTree = "<absolute>"; };
 		8BD1701B14E0F00500B472F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BD1701F14E0F00500B472F4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -66,12 +74,15 @@
 		8BD1702B14E0F00500B472F4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/splash/Default@2x.png"; sourceTree = "<group>"; };
 		8BD1702D14E0F00500B472F4 /* Capture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Capture.bundle; path = Resources/Capture.bundle; sourceTree = "<group>"; };
 		8BD1702F14E0F00500B472F4 /* PhoneGap.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PhoneGap.plist; sourceTree = "<group>"; };
-		8BD1703214E0F00500B472F4 /* AppDelegate.h */ = {isa = PBXFileReference; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
+		8BD1703214E0F00500B472F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		8BD1703314E0F00500B472F4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
-		8BD1703514E0F00500B472F4 /* MainViewController.h */ = {isa = PBXFileReference; name = MainViewController.h; path = Classes/MainViewController.h; sourceTree = "<group>"; };
+		8BD1703514E0F00500B472F4 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Classes/MainViewController.h; sourceTree = "<group>"; };
 		8BD1703614E0F00500B472F4 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Classes/MainViewController.m; sourceTree = "<group>"; };
 		8BD1703814E0F00500B472F4 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainViewController.xib; path = Classes/MainViewController.xib; sourceTree = "<group>"; };
-		8BD1703B14E0F00500B472F4 /* README */ = {isa = PBXFileReference; name = README; path = Plugins/README; sourceTree = "<group>"; };
+		8BD1703B14E0F00500B472F4 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = Plugins/README; sourceTree = "<group>"; };
+		8BD1704114E0F09A00B472F4 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		8BD1704314E0F19200B472F4 /* iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone.png; sourceTree = "<group>"; };
+		8BD1704514E0F19A00B472F4 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +120,10 @@
 		8BD16FE114E0F00500B472F4 = {
 			isa = PBXGroup;
 			children = (
+				8BAA5CBC14E0FAC9004F6291 /* ipad.png */,
+				8BD1704514E0F19A00B472F4 /* icon1.png */,
+				8BD1704314E0F19200B472F4 /* iphone.png */,
+				8BD1704114E0F09A00B472F4 /* www */,
 				8BD1700D14E0F00500B472F4 /* Acotubo3 */,
 				8BD16FF214E0F00500B472F4 /* Frameworks */,
 				8BD16FF014E0F00500B472F4 /* Products */,
@@ -118,7 +133,7 @@
 		8BD16FF014E0F00500B472F4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8BD16FEF14E0F00500B472F4 /* Acotubo3.app */,
+				8BD16FEF14E0F00500B472F4 /* Acotubo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,10 +173,10 @@
 		8BD1700E14E0F00500B472F4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8BD1700F14E0F00500B472F4 /* Acotubo3-Info.plist */,
+				8BD1700F14E0F00500B472F4 /* Acotubo-Info.plist */,
 				8BD1701014E0F00500B472F4 /* InfoPlist.strings */,
 				8BD1701314E0F00500B472F4 /* main.m */,
-				8BD1701514E0F00500B472F4 /* Acotubo3-Prefix.pch */,
+				8BD1701514E0F00500B472F4 /* Acotubo-Prefix.pch */,
 				8BD1702F14E0F00500B472F4 /* PhoneGap.plist */,
 				8BD1703814E0F00500B472F4 /* MainViewController.xib */,
 			);
@@ -237,9 +252,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8BD16FEE14E0F00500B472F4 /* Acotubo3 */ = {
+		8BD16FEE14E0F00500B472F4 /* Acotubo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BD1703E14E0F00500B472F4 /* Build configuration list for PBXNativeTarget "Acotubo3" */;
+			buildConfigurationList = 8BD1703E14E0F00500B472F4 /* Build configuration list for PBXNativeTarget "Acotubo" */;
 			buildPhases = (
 				8BD16FE814E0F00500B472F4 /* Sources */,
 				8BD16FE914E0F00500B472F4 /* Frameworks */,
@@ -252,9 +267,9 @@
 			);
 			dependencies = (
 			);
-			name = Acotubo3;
+			name = Acotubo;
 			productName = Acotubo3;
-			productReference = 8BD16FEF14E0F00500B472F4 /* Acotubo3.app */;
+			productReference = 8BD16FEF14E0F00500B472F4 /* Acotubo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -265,7 +280,7 @@
 			attributes = {
 				LastUpgradeCheck = 0420;
 			};
-			buildConfigurationList = 8BD16FE614E0F00500B472F4 /* Build configuration list for PBXProject "Acotubo3" */;
+			buildConfigurationList = 8BD16FE614E0F00500B472F4 /* Build configuration list for PBXProject "Acotubo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -278,7 +293,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8BD16FEE14E0F00500B472F4 /* Acotubo3 */,
+				8BD16FEE14E0F00500B472F4 /* Acotubo */,
 			);
 		};
 /* End PBXProject section */
@@ -299,6 +314,10 @@
 				8BD1702E14E0F00500B472F4 /* Capture.bundle in Resources */,
 				8BD1703014E0F00500B472F4 /* PhoneGap.plist in Resources */,
 				8BD1703914E0F00500B472F4 /* MainViewController.xib in Resources */,
+				8BD1704214E0F09A00B472F4 /* www in Resources */,
+				8BD1704414E0F19200B472F4 /* iphone.png in Resources */,
+				8BD1704614E0F19A00B472F4 /* icon1.png in Resources */,
+				8BAA5CBD14E0FAC9004F6291 /* ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +364,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8BD1701114E0F00500B472F4 /* en */,
+				8BAA5CAF14E0F397004F6291 /* pt */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -353,6 +373,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8BD1701B14E0F00500B472F4 /* en */,
+				8BAA5CAD14E0F397004F6291 /* pt */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -361,6 +382,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8BD1701F14E0F00500B472F4 /* es */,
+				8BAA5CAE14E0F397004F6291 /* pt */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -368,11 +390,67 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8BAA5CAA14E0F38D004F6291 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		8BAA5CAB14E0F38D004F6291 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Vinicius Bassi";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = /Users/Shared/PhoneGap/Frameworks;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Acotubo3/Acotubo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
+				INFOPLIST_FILE = "Acotubo3/Acotubo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak_library",
+					/usr/lib/libSystem.B.dylib,
+				);
+				PRODUCT_NAME = Acotubo;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "222AC5A2-DAAD-450D-9B8D-8EE3F58449E4";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
 		8BD1703C14E0F00500B472F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -397,7 +475,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -416,13 +497,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/PhoneGap/Frameworks;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Acotubo3/Acotubo3-Prefix.pch";
+				GCC_PREFIX_HEADER = "Acotubo3/Acotubo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
-				INFOPLIST_FILE = "Acotubo3/Acotubo3-Info.plist";
+				INFOPLIST_FILE = "Acotubo3/Acotubo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -433,7 +516,8 @@
 					"-weak_library",
 					/usr/lib/libSystem.B.dylib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Acotubo;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -443,13 +527,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/PhoneGap/Frameworks;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Acotubo3/Acotubo3-Prefix.pch";
+				GCC_PREFIX_HEADER = "Acotubo3/Acotubo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
-				INFOPLIST_FILE = "Acotubo3/Acotubo3-Info.plist";
+				INFOPLIST_FILE = "Acotubo3/Acotubo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -460,7 +546,8 @@
 					"-weak_library",
 					/usr/lib/libSystem.B.dylib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Acotubo;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -470,22 +557,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8BD16FE614E0F00500B472F4 /* Build configuration list for PBXProject "Acotubo3" */ = {
+		8BD16FE614E0F00500B472F4 /* Build configuration list for PBXProject "Acotubo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BD1703C14E0F00500B472F4 /* Debug */,
 				8BD1703D14E0F00500B472F4 /* Release */,
+				8BAA5CAA14E0F38D004F6291 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BD1703E14E0F00500B472F4 /* Build configuration list for PBXNativeTarget "Acotubo3" */ = {
+		8BD1703E14E0F00500B472F4 /* Build configuration list for PBXNativeTarget "Acotubo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BD1703F14E0F00500B472F4 /* Debug */,
 				8BD1704014E0F00500B472F4 /* Release */,
+				8BAA5CAB14E0F38D004F6291 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html manifest="cache_manifest.html">
+  <head>
+  <title></title>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=.5 ,user-scalable=no;" />
+	<meta charset="utf-8">
+
+
+	<!-- iPad/iPhone specific css below, add after your main css >-->
+	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+	<link rel="stylesheet" media="only screen and (max-device-width: 600px)" href="iphone.css" type="text/css" />		
+	
+        
+    <link rel="stylesheet" href="mobile/jquery.mobile-1.0rc2.css" type="text/css" />
+    <link rel="stylesheet" href="scroll/sw/spinningwheel.css" type="text/css" />  
+        
+    <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="mobile/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="mobile/jquery.form.js"></script>
+    <script type="text/javascript" charset="utf-8" src="mobile/jquery.mobile-1.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scroll/sw/spinningwheel.js"></script>
+	<script type="text/javascript" charset="utf-8" src="flanges.js"></script>
+        
+        
+    <script type="text/javascript">
+        
+    function onBodyLoad()
+	{		
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+    function Calculos()
+    {
+        var ret = $.mobile.path.parseUrl(location.href);
+        
+        switch (ret.hash)
+        {
+            case "#barraC":
+            CalculaBarra();
+            break;
+            case "#tuboC":
+            CalculaTubo();
+            break;
+            case "#chapasI":
+            CalculaChapa();
+            break;
+            case "#tubosI":
+            CalculaTuboI();
+            break;
+            //case "#curva":
+            //PopulaCurva();
+            //break;
+            //case "#te":
+            //PopulaTe();
+            //break;
+            //case "#flanges":
+            //openFlange();
+            //break;
+            case "#conexoes1":
+            PopulaConexao();
+            case "#flanges":
+            PopulaFlange();
+            break;
+        }
+                
+    }
+        
+    function CalculaChapa(){
+        var spinn = $("#conteudoPicker").val();
+        
+        var esp = 0;
+        var alt = 0;
+        var comp = 0;
+        var esp = spinn.split(",")[0];
+        var comp = spinn.split(",")[2];
+        var alt = spinn.split(",")[1];
+        
+        var Total = ((esp*comp*alt)*8)/1000;
+        var Total = Total.toFixed(2)
+        var comp = comp/1000;
+        if (!isNaN(Total) && Total > 0)
+        {
+            $("#larguraChapa").html(comp+"m");
+            $("#alturaChapa").html(alt+"m");
+            $("#chapaTotalVl").val(Total);
+            $("#chapaTotal").html("Total<br>"+Total+ " Kg/m");
+        }
+        else
+        {
+            $("#larguraChapa").html("&nbsp;");
+            $("#alturaChapa").html("&nbsp;");
+            $("#chapaTotalVl").val("&nbsp;");
+            $("#chapaTotal").html("&nbsp;");
+        }
+        /*
+        if (alt == 1 && (comp == 1.2 || comp == 1.5))
+        {
+            $("#larguraChapa").html("0");
+            $("#alturaChapa").html("0");
+            $("#chapaTotalVl").val("0");
+            $("#chapaTotal").html("Total<br>"+0+ " Kg/m");
+        }
+        
+        if (alt == 2 && comp == 1.5)
+        {
+            $("#larguraChapa").html("0");
+            $("#alturaChapa").html("0");
+            $("#chapaTotalVl").val("0");
+            $("#chapaTotal").html("Total<br>"+0+ " Kg/m");
+        }*/
+    }
+    
+        
+        
+    function CalculaBarra(){
+        var valBarra = $("#conteudoPicker").val();
+        var valueBar = valBarra.split(",")[1];
+        var tipoBar = valBarra.split(",")[0];
+        var Total = 0;
+        var imagem = "";
+        
+        
+                
+        switch (tipoBar)
+        {
+            case "Redonda":
+            Total = (valueBar*valueBar*0.62)/100;
+            Total = Total.toFixed(2);
+            imagem = "imagens/redonda.png";
+            break;
+            case "Quadrada":
+            Total = (valueBar*valueBar*0.79)/100;
+            Total = Total.toFixed(2);
+            imagem = "imagens/quadrada.png";
+            break;
+            case "Sextavado":
+            Total = (valueBar*valueBar*0.68)/100;
+            Total = Total.toFixed(2);
+            imagem = "imagens/sextavado.png";
+            break;
+        }
+        if (tipoBar == "Redonda" || tipoBar == "Quadrada" || tipoBar == "Sextavado")
+        {
+            $("#barraVar").html(valueBar);
+            $("#barraTotal").html("Total<br>"+Total+ " Kg/m");
+            $("#barTotal").val(Total);
+            $("#imgBarra").attr("src",imagem);
+        }
+    }    
+    
+        
+    function CalculaTubo(){
+        var valBarra = $("#conteudoPicker").val();
+        var dExt = valBarra.split(",")[0];
+        
+        var contador =  valBarra.split(",")[1].split("|")[2];
+        var calc = 0;
+        var cCount = 0;
+        switch(dExt)
+        {
+            case "13.7":
+            for (i=1;i<3;i++)
+            {
+                $("#slotTubo"+i).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=3;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            case "17.1":
+            for (i=1;i<3;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=3;h<=4;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=5;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            
+            break;
+            
+            case "21.3":
+            for (i=1;i<5;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=5;h<=8;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=9;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "26.7":
+            for (i=1;i<9;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=9;h<=12;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=13;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "33.4":
+            for (i=1;i<13;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=13;h<=16;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=17;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "42.2":
+            for (i=1;i<17;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=17;h<=20;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=21;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "48.3":
+            for (i=1;i<21;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=21;h<=24;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=25;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            
+            case "60.3":
+            for (i=1;i<25;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=25;h<=28;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=29;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            
+            case "73":
+            for (i=1;i<29;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=29;h<=32;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=33;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "88.9":
+            for (i=1;i<33;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=33;h<=36;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=37;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "101.6":
+            for (i=1;i<37;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=37;h<=38;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=39;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "114.3":
+            for (i=1;i<39;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=39;h<=43;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=44;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "141.3":
+            for (i=1;i<44;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=44;h<=48;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=49;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            
+            case "168.3":
+            for (i=1;i<49;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=49;h<=54;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=55;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "219.1":
+            for (i=1;i<55;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=55;h<=66;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=67;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "273":
+            for (i=1;i<67;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=67;h<=74;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=75;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            $("#slotTubo146").show();
+            break;
+            
+            case "323.8":
+            for (i=1;i<75;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=75;h<=85;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=86;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "355.6":
+            for (i=1;i<86;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=86;h<=96;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=97;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "406.4":
+            for (i=1;i<97;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=97;h<=106;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=107;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "457":
+            for (i=1;i<107;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=107;h<=118;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=119;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            
+            case "508":
+            for (i=1;i<119;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=119;h<=125;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=126;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "559":
+            for (i=1;i<126;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=126;h<=135;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            for(j=136;j<=146;j++)
+            {
+                $("#slotTubo"+j).hide();
+            }
+            break;
+            
+            case "610":
+            for (i=1;i<136;i++)
+            {
+                $("#slotTubo"+i).hide();
+                
+            }
+            for (h=136;h<=146;h++)
+            {
+                $("#slotTubo"+h).show();
+                cCount = cCount+1;
+                calc = -44*cCount;
+            }
+            $("#slotTubo146").hide();
+            break;
+        }
+        SpinningWheel.slotEl[1].slotMaxScroll = calc;
+        
+        
+        
+        
+       
+        var cCout = 0;
+        $("#vlUl1 li:visible").each(function(){
+                            
+                            cCout +=1;
+                            tot = (SpinningWheel.slotEl[1].slotYPosition / 44 )*(-1);
+                            tot = tot+1;
+                            if (cCout == tot)
+                            {
+                            Parede = $(this).attr("valorSlot").split("|")[1];
+                            dInt = $(this).attr("valorSlot").split("|")[0];
+
+                            
+                            }
+                            
+                            
+                            });
+        
+        var Total = ((dExt-Parede)*Parede)*0.02466
+        var Total = Total.toFixed(2)
+        
+        var dExt = parseFloat(dExt).toFixed(1);
+        
+        if (!isNaN(Total) && Total >  0)
+        {
+            $("#tuboVarA").html(dExt);
+            $("#tuboVarB").html(Parede);
+            $("#tuboVarC").html(dInt);
+            $("#tuboTotalVl").val(Total);
+            $("#tuboTotal").html("Total<br>"+Total+ " Kg/m");
+        }
+        else
+        {
+            $("#tuboVarA").html("&nbsp;");
+            $("#tuboVarB").html("&nbsp;");
+            $("#tuboVarC").html("&nbsp;");
+            $("#tuboTotalVl").val("");
+            $("#tuboTotal").html("&nbsp;");
+        }
+    }  
+        
+        function CalculaTuboI(){
+            var valBarra = $("#conteudoPicker").val();
+            var dExt = valBarra.split(",")[0];
+            var Parede = valBarra.split(",")[1];
+            var dInt = "";
+            var cCountTubo = 0;
+            if (dExt == 10.20)
+            {
+                $("#slot1_24").html("1.24 / 10-S");
+                $("#slot1_50").html("1.50 / 20-S");
+                $("#slot1_73").html("1.73 / 40-S");
+                $("#slot2_41").html("2.41 / 80-S");
+                
+                $("#vlUl1 li").each(function(){
+                    if($(this).attr("id") == "slot1_24" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot1_50" || $(this).attr("id") == "slot1_73" || $(this).attr("id") == "slot2_41")
+                    {
+                        cCountTubo += 1;
+                        $(this).show();
+                    }
+                    else
+                    {
+                        $(this).hide();
+                    }
+                });
+            }
+            
+            if (dExt == 13.72)
+            {
+                
+                $("#slot1_65").html("1.65 / 10-S");
+                $("#slot2_00").html("2.00 / 20-S");
+                $("#slot2_24").html("2.24 / 40-S");
+                $("#slot3_02").html("3.02 / 80-S");
+                
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_00" || $(this).attr("id") == "slot2_24" || $(this).attr("id") == "slot3_02")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 17.15)
+            {
+                
+                $("#slot1_65").html("1.65 / 10-S");
+                $("#slot2_00").html("2.00 / 20-S");
+                $("#slot2_31").html("2.31 / 40-S");
+                $("#slot3_20").html("3.20 / 80-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_00" || $(this).attr("id") == "slot2_31" || $(this).attr("id") == "slot3_20")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 21.34)
+            {
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_11").html("2.11 / 10-S");
+                $("#slot2_50").html("2.50 / 20-S");
+                $("#slot2_77").html("2.77 / 40-S");
+                $("#slot3_73").html("2.73 / 80-S");
+                $("#slot4_75").html("4.75 / 160-S");
+                
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot2_50" || $(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot3_73" || $(this).attr("id") == "slot4_75")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 26.67)
+            {
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_11").html("2.11 / 10-S");
+                $("#slot2_50").html("2.50 / 20-S");
+                $("#slot2_87").html("2.87 / 40-S");
+                $("#slot3_91").html("3.91 / 80-S");
+                $("#slot5_54").html("5.54 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot2_50" || $(this).attr("id") == "slot2_87" || $(this).attr("id") == "slot3_91" || $(this).attr("id") == "slot5_54")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 33.40)
+            {
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_77").html("2.77 / 10-S");
+                $("#slot3_00").html("3.00 / 20-S");
+                $("#slot3_38").html("3.38 / 40-S");
+                $("#slot4_55").html("4.55 / 80-S");
+                $("#slot6_35").html("6.35 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot3_00" || $(this).attr("id") == "slot3_38" || $(this).attr("id") == "slot4_55" || $(this).attr("id") == "slot6_35")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 42.16)
+            {
+                
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_77").html("2.77 / 10-S");
+                $("#slot3_00").html("3.00 / 20-S");
+                $("#slot3_56").html("3.56 / 40-S");
+                $("#slot4_85").html("4.85 / 80-S");
+                $("#slot6_35").html("6.35 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot3_00" || $(this).attr("id") == "slot3_56" || $(this).attr("id") == "slot4_85" || $(this).attr("id") == "slot6_35")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 48.26)
+            {
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_77").html("2.77 / 10-S");
+                $("#slot3_00").html("3.00 / 20-S");
+                $("#slot3_68").html("3.68 / 40-S");
+                $("#slot5_08").html("5.08 / 80-S");
+                $("#slot7_14").html("7.14 / 160-S");
+                
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot3_00" || $(this).attr("id") == "slot3_68" || $(this).attr("id") == "slot5_08" || $(this).attr("id") == "slot7_14")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 60.33)
+            {
+                $("#slot1_65").html("1.65 / 5-S");
+                $("#slot2_77").html("2.77 / 10-S");
+                $("#slot3_50").html("3.50 / 20-S");
+                $("#slot3_91").html("3.91 / 40-S");
+                $("#slot5_54").html("5.54 / 80-S");
+                $("#slot8_71").html("8.71 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot1_65" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot3_50" || $(this).attr("id") == "slot3_91" || $(this).attr("id") == "slot5_54" || $(this).attr("id") == "slot8_71")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 73.03)
+            {
+                
+                $("#slot2_11").html("2.11 / 5-S");
+                $("#slot3_05").html("3.05 / 10-S");
+                $("#slot3_50").html("3.50 / 20-S");
+                $("#slot4_16").html("4.16 / 40-S");
+                $("#slot7_01").html("7.01 / 80-S");
+                $("#slot9_53").html("9.53 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_05" || $(this).attr("id") == "slot3_50" || $(this).attr("id") == "slot4_16" || $(this).attr("id") == "slot7_01" || $(this).attr("id") == "slot9_53")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 88.90)
+            {
+                
+                $("#slot2_11").html("2.11 / 5-S");
+                $("#slot3_05").html("3.05 / 10-S");
+                $("#slot4_00").html("4.00 / 20-S");
+                $("#slot5_49").html("5.49 / 40-S");
+                $("#slot7_62").html("7.62 / 80-S");
+                $("#slot11_13").html("11.13 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_05" || $(this).attr("id") == "slot4_00" || $(this).attr("id") == "slot5_49" || $(this).attr("id") == "slot7_62" || $(this).attr("id") == "slot11_13")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 101.60)
+            {
+                $("#slot2_11").html("2.11 / 5-S");
+                $("#slot3_05").html("3.05 / 10-S");
+                $("#slot4_00").html("4.00 / 20-S");
+                $("#slot5_74").html("5.74 / 40-S");
+                $("#slot8_08").html("8.08 / 80-S");
+                $("#slot12_70").html("12.70 / 160-S");
+
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_05" || $(this).attr("id") == "slot4_00" || $(this).attr("id") == "slot5_74" || $(this).attr("id") == "slot8_08" || $(this).attr("id") == "slot12_70")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            if (dExt == 114.30)
+            {
+                
+                $("#slot2_11").html("2.11 / 5-S");
+                $("#slot3_05").html("3.05 / 10-S");
+                $("#slot4_00").html("4.00 / 20-S");
+                $("#slot6_02").html("6.02 / 40-S");
+                $("#slot8_56").html("8.56 / 80-S");
+                $("#slot13_49").html("13.49 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_11" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_05" || $(this).attr("id") == "slot4_00" || $(this).attr("id") == "slot6_02" || $(this).attr("id") == "slot8_56" || $(this).attr("id") == "slot13_49")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 141.30)
+            {
+                
+                $("#slot2_77").html("2.77 / 5-S");
+                $("#slot3_40").html("3.40 / 10-S");
+                $("#slot5_00").html("5.00 / 20-S");
+                $("#slot6_55").html("6.55 / 40-S");
+                $("#slot9_53").html("9.53 / 80-S");
+                $("#slot15_88").html("15.88 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_40" || $(this).attr("id") == "slot5_00" || $(this).attr("id") == "slot6_55" || $(this).attr("id") == "slot9_53" || $(this).attr("id") == "slot15_88")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 168.28)
+            {
+                $("#slot2_77").html("2.77 / 5-S");
+                $("#slot3_40").html("3.40 / 10-S");
+                $("#slot5_00").html("5.00 / 20-S");
+                $("#slot7_11").html("7.11 / 40-S");
+                $("#slot10_97").html("10.97 / 80-S");
+                $("#slot18_24").html("18.24 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_40" || $(this).attr("id") == "slot5_00" || $(this).attr("id") == "slot7_11" || $(this).attr("id") == "slot10_97" || $(this).attr("id") == "slot18_24")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 219.08)
+            {
+                
+                $("#slot2_77").html("2.77 / 5-S");
+                $("#slot3_76").html("3.76 / 10-S");
+                $("#slot6_50").html("6.50 / 20-S");
+                $("#slot8_18").html("8.18 / 40-S");
+                $("#slot12_70").html("12.70 / 80-S");
+                $("#slot23_02").html("23.02 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot2_77" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot3_76" || $(this).attr("id") == "slot6_50" || $(this).attr("id") == "slot8_18" || $(this).attr("id") == "slot12_70" || $(this).attr("id") == "slot23_02")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 273.05)
+            {
+                $("#slot3_40").html("3.40 / 5-S");
+                $("#slot4_19").html("4.19 / 10-S");
+                $("#slot6_50").html("6.50 / 20-S");
+                $("#slot9_27").html("9.27 / 40-S");
+                $("#slot12_70").html("12.70 / 80-S");
+                $("#slot28_57").html("28.57 / 160-S");
+                
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot3_40" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot4_19" || $(this).attr("id") == "slot6_50" || $(this).attr("id") == "slot9_27" || $(this).attr("id") == "slot12_70" || $(this).attr("id") == "slot28_57")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 323.85)
+            {
+                
+                $("#slot3_96").html("3.96 / 5-S");
+                $("#slot4_57").html("4.57 / 10-S");
+                $("#slot6_50").html("6.50 / 20-S");
+                $("#slot9_53").html("9.53 / 40-S");
+                $("#slot12_70").html("12.70 / 80-S");
+                $("#slot33_34").html("33.34 / 160-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot3_96" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot4_57" || $(this).attr("id") == "slot6_50" || $(this).attr("id") == "slot9_53" || $(this).attr("id") == "slot12_70" || $(this).attr("id") == "slot33_34")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 355.60)
+            {
+                $("#slot3_96").html("3.96 / 5-S");
+                $("#slot4_78").html("4.78 / 10-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot3_96" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot4_78")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 406.40 || dExt == 457.20)
+            {
+                $("#slot4_20").html("4.20 / 5-S");
+                $("#slot4_78").html("4.78 / 10-S");
+                
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot4_20" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot4_78")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 508.00)
+            {
+                
+                $("#slot4_78").html("4.78 / 5-S");
+                $("#slot5_54").html("5.54 / 10-S");
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot4_78" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot5_54")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            if (dExt == 609.60)
+            {
+                
+                
+                $("#slot5_54").html("5.54 / 5-S");
+                $("#slot6_35").html("6.36 / 10-S");
+                $("#vlUl1 li").each(function(){
+                                    if($(this).attr("id") == "slot5_54" || $(this).attr("id") == "slot" || $(this).attr("id") == "slot6_35")
+                                    {
+                                    cCountTubo += 1;
+                                    $(this).show();
+                                    }
+                                    else
+                                    {
+                                    $(this).hide();
+                                    }
+                                    });
+            }
+            
+            var maxSc = (cCountTubo * 44)*(-1);
+            
+            SpinningWheel.slotEl[1].slotMaxScroll = maxSc+44;
+            
+            var cCout = 0;
+            $("#vlUl1 li:visible").each(function(){
+                                        
+                                        cCout +=1;
+                                        tot = (SpinningWheel.slotEl[1].slotYPosition / 44 )*(-1);
+                                        tot = tot+1;
+                                        if (cCout == tot)
+                                        {
+                                        
+                                        Parede = $(this).attr("valorSlot");
+                                        //dExt = $(this).attr("valorSlot").split("|")[0];
+                                        
+                                        
+                                        }
+                                        
+                                        
+                                        });
+
+            
+            var Parede = parseFloat(Parede).toFixed(2);
+            var dExt = parseFloat(dExt).toFixed(2);
+            var Total = ((dExt-Parede)*Parede)*0.02514
+            var Total = Total.toFixed(2)
+            
+            
+            
+            
+            if (!isNaN(Total) && Total >  0)
+            {
+                $("#tuboVarAi").html(dExt);
+                $("#tuboVarBi").html(Parede);
+                $("#tuboVarCi").html(dInt);
+                $("#tuboTotalVli").val(Total);
+                $("#tuboTotali").html("Total<br>"+Total+ " Kg/m");
+            }
+            else
+            {
+                $("#tuboVarAi").html("&nbsp;");
+                $("#tuboVarBi").html("&nbsp;");
+                $("#tuboVarCi").html("&nbsp;");
+                $("#tuboTotalVli").val("");
+                $("#tuboTotali").html("&nbsp;");
+            }
+        }  
+        
+        function PopulaConexao(){
+            var valSpin = $("#conteudoPicker").val();
+            var tipoC = valSpin.split(",")[0];
+            var tipo = valSpin.split(",")[1];
+            var diam = valSpin.split(",")[2];
+            
+            var tipo = tipo.split("_")[1];
+            
+            switch (parseInt(tipoC))
+            {
+                case 4:
+                $("#slot4_1").show();
+                for (i = 1;i<=5 ; i++)
+                {
+                    $("#slot1_"+i).hide(); 
+                    if(i <= 2)
+                    {
+                       $("#slot2_"+i).hide();
+                       $("#slot3_"+i).hide();
+                    }
+                }
+                SpinningWheel.slotEl[1].slotMaxScroll = 0;
+                PopulaTampao(tipo,diam);
+                break;
+                case 1:
+                {
+                    $("#slot4_1").hide();
+                    for (i = 1;i<=5 ; i++)
+                    {
+                        $("#slot1_"+i).show(); 
+                        if(i <= 2)
+                        {
+                            $("#slot2_"+i).hide();
+                            $("#slot3_"+i).hide();
+                        }
+                    } 
+                }
+                SpinningWheel.slotEl[1].slotMaxScroll = -176;
+                PopulaCurva(tipo,diam);
+                break;
+                case 2:
+                {
+                    $("#slot4_1").hide();
+                    for (i = 1;i<=5 ; i++)
+                    {
+                        $("#slot1_"+i).hide(); 
+                        if(i <= 2)
+                        {
+                            $("#slot2_"+i).show();
+                            $("#slot3_"+i).hide();
+                        }
+                    }
+                }
+                SpinningWheel.slotEl[1].slotMaxScroll = -44;
+                PopulaTe(tipo,diam);
+                break;
+                case 3:
+                {
+                    $("#slot4_1").hide();
+                    for (i = 1;i<=5 ; i++)
+                    {
+                        $("#slot1_"+i).hide(); 
+                        if(i <= 2)
+                        {
+                            $("#slot2_"+i).hide();
+                            $("#slot3_"+i).show();
+                        }
+                    }
+                }
+                SpinningWheel.slotEl[1].slotMaxScroll = -44;
+                PopulaRedutor(tipo,diam);
+                break;
+            }
+            
+           
+        }
+        
+        function PopulaFlange(){
+            var valSpin = $("#conteudoPicker").val();
+            $(".divFlange").hide();
+            var tipo = valSpin.split(",")[0];
+            var pressao = valSpin.split(",")[1];
+            var dimensao = valSpin.split(",")[2];
+            
+            switch(parseInt(pressao))
+            {
+                case 1:
+                valoresFlange150();
+                atribuir_medidas150(dimensao);
+                
+                break;
+                case 2:
+                valoresFlange300();
+                atribuir_medidas300(dimensao);
+                
+                break;
+                case 3:
+                valoresFlange600();
+                atribuir_medidas600(dimensao);
+                break;
+                case 4:
+                valoresFlange900();
+                atribuir_medidas900(dimensao);
+                break;
+                case 5:
+                valoresFlange1500();
+                atribuir_medidas1500(dimensao);
+                break;
+            }
+            
+            
+            
+            switch(parseInt(tipo))
+            {
+                case 2:
+                $("#imgFlange").attr("src","imagens/conexoes/sobreposto.png");
+                var exibe = "var_l,var_m,var_c,var_k,var_g,var_d,var_b,var_n";
+                
+                $(".divFlange").each(function(){
+                    var id = $(this).attr("id");
+                    
+                    if(exibe.search(id) >= 0)
+                    {
+                        $(this).show();
+                        $(this).html(eval(id));
+                        var classn = id+"_"+parseInt(tipo);
+                        $(this).removeClass();
+                        $(this).addClass("divFlange");
+                        $(this).addClass(classn);
+                                     
+                    }
+                    else
+                    {
+                        $(this).hide();
+                    }
+                });
+                $("#pesoFlange").html("Peso aprox. "+peso_so);
+                break;
+                case 3:
+                $("#imgFlange").attr("src","imagens/conexoes/compescoco.png");
+                var exibe = "var_a,var_l,var_m,var_j,var_h,var_b,var_g,var_k,var_d";
+                $(".divFlange").each(function(){
+                    var id = $(this).attr("id");
+                                     
+                    if(exibe.search(id) >= 0)
+                    {
+                        $(this).show();
+                        $(this).html(eval(id));
+                        var classn = id+"_"+parseInt(tipo);
+                                     $(this).removeClass();
+                                     $(this).addClass("divFlange");
+                        $(this).addClass(classn);
+                    }
+                    else
+                    {
+                        $(this).hide();
+                    }
+                });
+                $("#pesoFlange").html("Peso aprox. "+peso_cp);
+                break;
+                case 1:
+                $("#imgFlange").attr("src","imagens/conexoes/cego.png");
+                var exibe = "var_l,var_b,var_f,var_g,var_k,var_d";
+                $(".divFlange").each(function(){
+                    var id = $(this).attr("id");
+                    if(exibe.search(id) >= 0)
+                    {
+                        $(this).show();
+                        $(this).html(eval(id));
+                        var classn = id+"_"+parseInt(tipo);
+                                     $(this).removeClass();
+                                     $(this).addClass("divFlange");
+                        $(this).addClass(classn);
+                    }
+                    else
+                    {
+                        $(this).hide();
+                    }
+                });
+                $("#pesoFlange").html("Peso aprox. "+peso_cg);
+                break;
+                case 4:
+                $("#imgFlange").attr("src","imagens/conexoes/lapjoint.png");
+                var exibe = "var_l,var_m,var_v,var_r,var_b,var_o,var_k,var_d";
+                $(".divFlange").each(function(){
+                                     var id = $(this).attr("id");
+                                     if(exibe.search(id) >= 0)
+                                     {
+                                     $(this).show();
+                                     $(this).html(eval(id));
+                                     var classn = id+"_"+parseInt(tipo);
+                                     $(this).removeClass();
+                                     $(this).addClass("divFlange");
+                                     $(this).addClass(classn);
+                                     }
+                                     else
+                                     {
+                                     $(this).hide();
+                                     }
+                                     });
+                $("#pesoFlange").html("Peso aprox. "+peso_cg);
+                break;
+            }
+            $("#furosFlange").html("Furos: "+furos);
+        }
+        
+        function PopulaDiam(diam)
+        {
+            switch(parseInt(diam))
+            {
+                case 1:
+                var varA=38.10;
+                var varB=15.87;
+                var varD=0;
+                var varK=47.62;
+                var varV=0;
+                var varE=25.40;
+                var Dext=21.30;
+                break;
+                case 2:
+                var varA=28.60;
+                var varB=11.91;
+                var varD=0;
+                var varK=42.90;
+                var varV=0;
+                var varE=25.40;
+                var Dext=26.67;
+                break;
+                case 3:
+                var varA=38.10;
+                var varB=15.90;
+                var varD=25.40;
+                var varK=55.60;
+                var varV=41.30;
+                var varE=38.10;
+                var Dext=33.40;
+                break;
+                case 4:
+                var varA=47.60;
+                var varB=19.84;
+                var varD=31.75;
+                var varK=69.80;
+                var varV=52.40;
+                var varE=38.10;
+                var Dext=42.16;
+                break;
+                case 5:
+                var varA=57.30;
+                var varB=23.83;
+                var varD=38.10;
+                var varK=82.60;
+                var varV=61.90;
+                var varE=38.10;
+                var Dext=48.26;
+                break;
+                case 6:
+                var varA=76.20;
+                var varB=31.80;
+                var varD=50.80;
+                var varK=106.40;
+                var varV=81.00;
+                var varE=38.10;
+                var Dext=60.32;
+                break;
+                case 7:
+                var varA=95.20;
+                var varB=39.76;
+                var varD=63.50;
+                var varK=131.80;
+                var varV=100.00;
+                var varE=38.10;
+                var Dext=73.02;
+                break;
+                case 8:
+                var varA=114.30;
+                var varB=47.60;
+                var varD=76.20;
+                var varK=158.80;
+                var varV=120.70;
+                var varE=50.80;
+                var Dext=88.90;
+                break;
+                case 9:
+                var varA=133.40;
+                var varB=55.60;
+                var varD=88.90;
+                var varK=184.20;
+                var varV=139.70;
+                var varE=63.50;
+                var Dext=101.60;
+                break;
+                case 10:
+                var varA=152.40;
+                var varB=63.50;
+                var varD=101.60;
+                var varK=209.60;
+                var varV=158.80;
+                var varE=63.50;
+                var Dext=114.30;
+                break;
+                case 11:
+                var varA=190.50;
+                var varB=79.40;
+                var varD=127.00;
+                var varK=261.90;
+                var varV=196.80;
+                var varE=76.20;
+                var Dext=141.30;
+                break;
+                case 12:
+                var varA=228.60;
+                var varB=92.30;
+                var varD=152.40;
+                var varK=312.70;
+                var varV=236.50;
+                var varE=88.90;
+                var Dext=168.30;
+                break;
+                case 13:
+                var varA=304.80;
+                var varB=127.00;
+                var varD=203.20;
+                var varK=414.30;
+                var varV=312.70;
+                var varE=101.60;
+                var Dext=219.10;
+                break;
+                case 14:
+                var varA=381.00;
+                var varB=158.80;
+                var varD=254.00;
+                var varK=517.50;
+                var varV=390.50;
+                var varE=127.00;
+                var Dext=273.00;
+                break;
+                case 15:
+                var varA=457.20;
+                var varB=190.50;
+                var varD=304.80;
+                var varK=619.10;
+                var varV=466.70;
+                var varE=152.40;
+                var Dext=328.80;
+                break;
+                case 16:
+                var varA=533.40;
+                var varB=222.22;
+                var varD=355.60;
+                var varK=711.20;
+                var varV=533.40;
+                var varE=165.10;
+                var Dext=355.60;
+                break;
+                case 17:
+                var varA=609.60;
+                var varB=254.00;
+                var varD=406.40;
+                var varK=812.90;
+                var varV=609.60;
+                var varE=177.80;
+                var Dext=406.40;
+                break;
+                case 18:
+                var varA=685.80;
+                var varB=285.80;
+                var varD=457.20;
+                var varK=914.40;
+                var varV=685.80;
+                var varE=203.20;
+                var Dext=457.20;
+                break;
+                case 19:
+                var varA=762.00;
+                var varB=317.50;
+                var varD=508.00;
+                var varK=1016.00;
+                var varV=762.00;
+                var varE=228.60;
+                var Dext=580.00;
+                break;
+                case 20:
+                var varA=914.40;
+                var varB=381.00;
+                var varD=609.60;
+                var varK=1219.00;
+                var varV=914.40;
+                var varE=266.70;
+                var Dext=609.60;
+                break;
+                
+                default:
+                var varA=38.10;
+                var varB=15.87;
+                var varD=0;
+                var varK=47.62;
+                var varV=0;
+                var varE=25.40;
+                var Dext=21.30;
+                
+            }
+            
+            
+            $(".divTe").hide();
+            $("#tampaoe").html(varE.toFixed(2));
+            $("#c45b1").html(varB.toFixed(2));
+            $("#c45b2").html(varB.toFixed(2));
+            $("#c90a1").html(varA.toFixed(2));
+            $("#c90a2").html(varA.toFixed(2));
+            $("#c180a1").html(varA.toFixed(2));
+            $("#c180a2").html(varA.toFixed(2));
+            $("#c180k").html(varK.toFixed(2));
+            $("#c90d1").html(varD.toFixed(2));
+            $("#c90d2").html(varD.toFixed(2));
+            $("#c180d1").html(varD.toFixed(2));
+            $("#c180d2").html(varD.toFixed(2));
+            $("#c180v").html(varV.toFixed(2));
+            $("#dExternoCon").show();
+            $("#dExternoCon").html("D. Ext.: "+Dext.toFixed(2));
+        
+        }
+        
+        
+        function PopulaTampao(tipo,diam){
+            switch(parseInt(tipo))
+            {
+                case 1:
+                $("#imgCurva").attr("src","imagens/conexoes/tampao.png");
+                $(".divCon").each(function(){
+                                  if($(this).attr("id") != "tampaoe")
+                                  $(this).hide();
+                                  else
+                                  $(this).show();
+                                  });
+            }
+            
+            PopulaDiam(diam);
+        }
+        
+        
+        
+        function PopulaCurva(tipo,diam){
+            
+            switch(parseInt(tipo))
+            {
+                
+                case 1:
+                $("#imgCurva").attr("src","imagens/conexoes/45longo.png");
+                $(".divCon").each(function(){
+                if($(this).attr("id") != "c45b1" && $(this).attr("id") != "c45b2")
+                    $(this).hide();
+                else
+                    $(this).show();
+                });
+                break;
+                case 2:
+                $("#imgCurva").attr("src","imagens/conexoes/90longo.png");
+                $(".divCon").each(function(){
+                                  if($(this).attr("id") != "c90a1" && $(this).attr("id") != "c90a2")
+                                  $(this).hide();
+                                  else
+                                  $(this).show();
+                                  });
+                break;
+                case 3:
+                $("#imgCurva").attr("src","imagens/conexoes/180longo.png");
+                $(".divCon").each(function(){
+                                  if($(this).attr("id") != "c180a1" && $(this).attr("id") != "c180a2" && $(this).attr("id") != "c180k")
+                                  $(this).hide();
+                                  else
+                                  $(this).show();
+                                  });
+                
+                
+                break;
+                case 4:
+                $("#imgCurva").attr("src","imagens/conexoes/90longo.png");
+                $(".divCon").each(function(){
+                                  if($(this).attr("id") != "c90d1" && $(this).attr("id") != "c90d2")
+                                  $(this).hide();
+                                  else
+                                  $(this).show();
+                                  });
+                break;
+                case 5:
+                $("#imgCurva").attr("src","imagens/conexoes/180longo.png");
+                $(".divCon").each(function(){
+                                  if($(this).attr("id") != "c180d1" && $(this).attr("id") != "c180d2" && $(this).attr("id") != "c180v")
+                                  $(this).hide();
+                                  else
+                                  $(this).show();
+                                  });
+                
+                
+                
+                break;
+            }
+            
+            PopulaDiam(diam);
+        }
+       
+    function PopulaDiam2(diam,tipo)
+    {
+        switch (parseInt(diam))
+        {
+            case 1:
+            var varc= 28.58 ;
+            var varm= 28.58 ;
+            var varh= 38.10 ;
+            break;                 
+            case 2:
+            var varc= 38.10 ;
+            var varm= 38.10 ;
+            var varh= 50.80 ;
+            break;                 
+            case 3:
+            var varc= 47.62 ;
+            var varm= 47.62 ;
+            var varh= 50.80 ;
+            break;                 
+            case 4:
+            var varc= 57.15 ;
+            var varm= 57.15 ;
+            var varh= 63.50 ;
+            break;                 
+            case 5:
+            var varc= 63.50 ;
+            var varm= 60.32 ;
+            var varh= 76.20 ;
+            break;  
+            case 6:
+            var varc= 76.20;
+            var varm= 69.85;
+            var varh= 88.90;
+            break;                 
+            case 7:
+            var varc= 85.72;
+            var varm= 82.55;
+            var varh= 101.60;
+            break;                 
+            case 8:
+            var varc= 95.25;
+            var varm= 92.08;
+            var varh= 101.60;
+            break;                 
+            case 9:
+            var varc= 104.78;
+            var varm= 101.60;
+            var varh= 101.60;
+            break;                 
+            case 10:
+            var varc= 123.83;
+            var varm= 117.48;
+            var varh= 127.00;
+            break;                 
+            case 11:
+            var varc= 142.90;
+            var varm= 136.50;
+            var varh= 139.70;
+            break;                 
+            case 12:
+            var varc= 177.80;
+            var varm= 168.30;
+            var varh= 152.40;
+            break;                 
+            case 13:
+            var varc= 215.90;
+            var varm= 203.20;
+            var varh= 177.80;
+            break;                 
+            case 14:
+            var varc= 254.00;
+            var varm= 241.30;
+            var varh= 203.20;
+            break;                 
+            case 15:
+            var varc= 279.40;
+            var varm= 269.90;
+            var varh= 330.20;
+            break;                 
+            case 16:
+            var varc= 304.80;
+            var varm= 304.80;
+            var varh= 355.60;
+            break;                 
+            case 17:
+            var varc= 342.90;
+            var varm= 330.20;
+            var varh= 381.00;
+            break;                 
+            case 18:
+            var varc= 381.00;
+            var varm= 368.30;
+            var varh= 508.00;
+            break;                 
+            case 19:
+            var varc= 431.80;
+            var varm= 431.80;
+            var varh= 508.00;
+            break;           
+            case 20:
+            var varc= 431.80;
+            var varm= 0;
+            var varh= 0;
+            break;           
+            
+        }
+        $(".divCon").hide();
+        if (tipo == 1)
+            $("#tec1").html(varc.toFixed(2));
+        else
+            $("#tec1").html(varm.toFixed(2));
+        $("#tec2").html(varc.toFixed(2));
+        $("#tec3").html(varc.toFixed(2));
+        $("#tem").html(varm.toFixed(2));
+        $("#redh").html(varh.toFixed(2));
+    
+    }
+        
+        
+    function PopulaRedutor(tipo,diam)
+    {
+        switch(parseInt(tipo))
+        {  
+            case 1:
+            $(".divTe").each(function(){
+                             if($(this).attr("id") == "redh")
+                             {
+                             $(this).show();
+                             }
+                             else
+                             {
+                             $(this).hide();
+                             }
+                             });
+            
+            $("#imgCurva").attr("src","imagens/conexoes/reducaoc.png");
+            break
+            case 2:
+            $(".divTe").each(function(){
+                             if($(this).attr("id") == "redh")
+                             {
+                             $(this).show();
+                             }
+                             else
+                             {
+                             $(this).hide();
+                             }
+                             });
+            
+            $("#imgCurva").attr("src","imagens/conexoes/reducaoe.png");
+            break;
+        }
+        PopulaDiam2(diam);
+    }
+        
+    
+    function PopulaTe(tipo,diam)
+    {
+        
+               
+        switch(parseInt(tipo))
+        {
+            case 1:
+            $(".divTe").each(function(){
+                if($(this).attr("id") == "tec1" || $(this).attr("id") == "tec2" || $(this).attr("id") == "tec3")
+                {
+                    $(this).show();
+                }
+                else
+                {
+                    $(this).hide();
+                }
+            });
+            
+            $("#imgCurva").attr("src","imagens/conexoes/tereto.png");
+            break;
+            case 2:
+            $(".divTe").each(function(){
+                             if($(this).attr("id") == "tec1" || $(this).attr("id") == "tec2" || $(this).attr("id") == "tec3")
+                             {
+                             $(this).show();
+                             }
+                             else
+                             {
+                             $(this).hide();
+                             }
+                             });
+            
+            $("#imgCurva").attr("src","imagens/conexoes/tereto.png");
+            break;
+            
+
+            default:
+        }
+        
+        PopulaDiam2(diam,parseInt(tipo));
+    }
+            
+	function onDeviceReady()
+	{
+        $.support.cors = true;
+        $.mobile.allowCrossDomainPages = true;
+        
+        
+        
+        $(".voltar").click(function(){
+            SpinningWheel.close();
+                          // $("#frmCotacao").hide();        
+                           
+        });
+        $(".ui-input-text").click(function(){
+            SpinningWheel.close();
+            //$("#frmCotacao").hide();
+        });
+        $("#home").fadeOut(1000,function(){
+                           $("#patrocinadores").fadeIn(1000).fadeOut(1000,function(){
+                                                                     location.href="#menu";
+                                                                     });                
+        });
+        
+        
+        
+        $('#menu').bind('pagebeforeshow',function(event){
+            $("#frmCotacao").fadeOut("normal");            
+        });
+        
+		$( '#barraC' ).bind( 'pageshow',function(event){
+            //$(".var").html("&nbsp;");
+            //$(".total").html("&nbsp;");
+            //$(".totalMetros").html("&nbsp;");
+            openBarraC();
+                            
+            $("#btnBarra").click(function(){
+                
+                                
+                                                
+                    var TotalMt = $("#mtsBarra").val() * $("#barTotal").val();
+                    var TotalMt = TotalMt.toFixed(2);
+                    $("#totalMetros").html("Total<br>"+TotalMt+ " kg");
+                    if ($("#sw-wrapper").height() == null)
+                    openBarraC();
+                    
+            
+            });              
+                            
+        });
+        $( '#tuboC' ).bind( 'pageshow',function(event){
+            $(".var").html("&nbsp;");
+            $(".total").html("&nbsp;");
+            $(".totalMetros").html("&nbsp;");
+            openTuboC();
+                           
+            $("#btnTubo").click(function(){
+                                               
+                
+            
+                var TotalMt = $("#mtsTubo").val() * $("#tuboTotalVl").val();
+                var TotalMt = TotalMt.toFixed(2);
+                $("#totalMetrosTubo").html("Total<br>"+TotalMt+ " kg");
+                if ($("#sw-wrapper").height() == null)
+                    openTuboC();
+            
+        });
+        });
+        
+        
+        $( '#tubosI' ).bind( 'pageshow',function(event){
+                           $(".var").html("&nbsp;");
+                           $(".total").html("&nbsp;");
+                           $(".totalMetros").html("&nbsp;");
+                           openTuboI();
+                           
+                           $("#btnTuboi").click(function(){
+                                              var TotalMt = $("#mtsTuboi").val() * $("#tuboTotalVli").val();
+                                              var TotalMt = TotalMt.toFixed(2);
+                                              $("#totalMetrosTuboi").html("Total<br>"+TotalMt+ " kg");
+                                              if ($("#sw-wrapper").height() == null)
+                                               openTuboI();
+                                               
+                                               
+                                               
+                                              });
+                            
+                            
+                           });
+        
+        $( '#chapasI' ).bind( 'pageshow',function(event){
+            $(".var").html("&nbsp;");
+            $(".total").html("&nbsp;");
+            $(".totalMetros").html("&nbsp;");
+            openChapa();
+            $("#btnChapa").click(function(){
+                                 var TotalMt = $("#mtsChapa").val() * $("#chapaTotal").val();
+                                 var TotalMt = TotalMt.toFixed(2);
+                                 $("#totalMetrosChapa").html("Total<br>"+TotalMt+ " kg");
+                                 if ($("#sw-wrapper").height() == null)
+                                 openChapa();
+            });
+        });
+        
+        
+        $( '#conexoes1' ).bind( 'pageshow',function(event){
+            openConexao();
+        });
+        
+        $( '#flanges' ).bind( 'pageshow',function(event){
+            openFlange();
+        });
+        
+        $(".facebook").click(function(){
+                             navigator.notification.confirm(
+                                                            'O acesso ao facebook consumirá dados. Deseja continuar?',  // message
+                                                            onConfirmFacebook,              // callback to invoke with index of button pressed
+                                                            'Atenção',            // title
+                                                            'Sim,Não'          // buttonLabels
+                                                            );
+
+                                    
+        });
+        
+        $(".twitter").click(function(){
+                             navigator.notification.confirm(
+                                                            'O acesso ao twitter consumirá dados. Deseja continuar?',  // message
+                                                            onConfirmTwitter,              // callback to invoke with index of button pressed
+                                                            'Atenção',            // title
+                                                            'Sim,Não'          // buttonLabels
+                                                            );
+                             
+                             
+                             });
+        
+        $(".linkedin").click(function(){
+                            navigator.notification.confirm(
+                                                           'O acesso ao linkedin consumirá dados. Deseja continuar?',  // message
+                                                           onConfirmLinkedin,              // callback to invoke with index of button pressed
+                                                           'Atenção',            // title
+                                                           'Sim,Não'          // buttonLabels
+                                                           );
+                            
+                            
+                            });
+        
+        
+        $(".youtube").click(function(){
+                            navigator.notification.confirm(
+                                                           'O acesso ao youtube consumirá dados. Deseja continuar?',  // message
+                                                           onConfirmYoutube,              // callback to invoke with index of button pressed
+                                                           'Atenção',            // title
+                                                           'Sim,Não'          // buttonLabels
+                                                           );
+                            
+                            
+                            });
+        
+        
+        $(".wordpress").click(function(){
+                            navigator.notification.confirm(
+                                                           'O acesso ao wordpress consumirá dados. Deseja continuar?',  // message
+                                                           onConfirmWordpress,              // callback to invoke with index of button pressed
+                                                           'Atenção',            // title
+                                                           'Sim,Não'          // buttonLabels
+                                                           );
+                            
+                            
+                            });
+        
+        $("#btnCotacao").click(function(){
+                               
+                               var retV = validaCotacao();                       
+                               if (retV == 1)
+                               {
+                               navigator.notification.confirm(
+                                                              'O formulário de cotação exige uma conexão de dados. Tem certeza que deseja continuar?',  // message
+                                                              onConfirm,              // callback to invoke with index of button pressed
+                                                              'Atenção',            // title
+                                                              'Sim,Não'          // buttonLabels
+                                                              );
+                               }
+        });
+        
+	}
+        
+        function onConfirmFacebook(button)
+        {
+            if( button != 1)
+            return false;
+            window.open("http://www.facebook.com/grupoacotubo");
+        }
+        function onConfirmTwitter(button)
+        {
+            if( button != 1)
+            return false;
+            window.open("http://www.twitter.com/#!/grupoacotubo");
+        }
+        function onConfirmLinkedin(button)
+        {
+            if( button != 1)
+            return false;
+            window.open("http://br.linkedin.com/in/grupoacotubo");
+        }
+        function onConfirmYoutube(button)
+        {
+            if( button != 1)
+            return false;
+            window.open("http://www.youtube.com/user/GRUPOACOTUBO");
+        }
+        function onConfirmWordpress(button)
+        {
+            if( button != 1)
+            return false;
+            window.open("http://www.acotubo.com.br/blog");
+        }
+        
+        function validaCotacao()
+        {
+            var x=$("#txtEmail").val();
+            var atpos=x.indexOf("@");
+            var dotpos=x.lastIndexOf(".");
+            var msg = "";
+            var nome=$("#txtNome").val();
+            var ddd=parseInt($("#txtDDD").val());
+            var fone=parseInt($("#txtFone").val());
+            
+            if(nome.trim() == "")
+            {
+                msg += "Digite um nome válido \n";
+            }
+            
+            if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+            {
+                msg += "E-mail inválido\n";
+            }
+            
+            if(isNaN(ddd))
+            {
+                msg += "DDD inválido\n";
+            }
+            if(isNaN(fone))
+            {
+                msg += "Telefone inválido\n";
+            }
+            if (msg != "")
+            {
+                navigator.notification.alert(msg,retornoAlert,"Validação","Corrigir");
+                msg ="";
+                return 0;
+            }
+            return 1;
+        }
+        
+        function onConfirm(button){
+            if( button != 1)
+                return false;
+        
+            var ret = $.mobile.path.parseUrl(location.href);
+            var Tipo = "";
+            var Descr = "";
+            
+            var contentPicker = $("#conteudoPickerDescr").val();
+            var splitP = contentPicker.split(",");
+            var TotalMt = "";
+            
+            
+            switch ($("#pagAnt").val())
+            {
+                case "#barraC":
+                var Tipo = "Barras de Aço Carbono<br>";
+                var Descr = "Tipo: "+splitP[0]+"<br>Espessura: "+splitP[1];
+                var TotalMt = $("#mtsBarra").val();
+                break;
+                case "#tuboC":
+                var Tipo = "Tubo Carbono<br>";
+                var Descr = "Externo: "+splitP[0]+"<br>Parede/Schedule: "+splitP[1];
+                var TotalMt = $("#mtsTubo").val();
+                break;
+                case "#chapasI":
+                var Tipo = "Chapa inoxidável<br>";
+                var Descr = "Espessura: "+splitP[0]+"<br>Largura: "+splitP[1]+"<br>Comprimento: "+splitP[2];
+                break;
+                case "#tubosI":
+                var Tipo = "Tubo inoxidável<br>";
+                var Descr = "Externo: "+splitP[0]+"<br>Parede/Schedule: "+splitP[1];
+                var TotalMt = $("#mtsTuboi").val();
+                break;
+                case "#conexoes1":
+                var Tipo = "Conexões<br>";
+                var Descr = "Conexão: "+splitP[0]+"<br>Tipo: "+splitP[1]+"<br>Diâmetro: "+splitP[2];
+                break;
+                case "#flanges":
+                var Tipo = "Flanges<br>";
+                var Descr = "Tipo: "+splitP[0]+"<br>Pressão: "+splitP[1]+"<br>Dimensão: "+splitP[2];
+                break;
+            }
+            
+            
+            var networkState = navigator.network.connection.type;
+            
+            if(networkState.toUpperCase() != "UNKNOWN" && networkState.toUpperCase() != "NONE")
+            {               
+                $(".imagemCon").focus();
+                var p1 = $("#txtNome").val();
+                var p2 = $("#txtEmail").val();
+                var p3 = $("#txtDDD").val();
+                var p4 = $("#txtFone").val();
+                var p5 = $("#txtMaterial").val();
+                var p6 = $("#txtQtde").val();
+                                
+                var campos = "p1="+escape(p1)+"&p2="+escape(p2)+"&p3="+escape(p3)+"&p4="+escape(p4)+"&p5="+escape(p5)+"&p6="+escape(p6)+"&p7="+escape(Tipo)+"&p8="+escape(Descr)+"&p9="+escape(TotalMt);         
+               
+                
+                
+                var ajax = new XMLHttpRequest();
+                ajax.open("GET","http://www.amorcanino.com.br/cotacao.php?"+campos,true);
+                ajax.send();
+                
+                ajax.onreadystatechange=function(){
+                    if(ajax.readyState==4 && (ajax.status==200)){
+                        //document.getElementById('retornoSubmit').innerHTML = ;
+                        navigator.notification.alert(ajax.responseText,retornoAlertOpen,"Atenção!!","Ok");
+                    }
+                }
+                
+               
+                
+                
+                return false;
+                 
+            }
+            else
+            {
+                navigator.notification.alert("Não há conexão de dados",retornoAlertOpen,"Atenção!!","Ok");
+                return false;
+            }
+        
+        }
+        
+        
+        function retornoAlertOpen(){
+            var ret = $.mobile.path.parseUrl(location.href);
+            
+            switch (ret.hash)
+            {
+                case "#barraC":
+                openBarraC();
+                break;
+                case "#tuboC":
+                openTuboC();
+                break;
+                case "#chapasI":
+                openChapa();
+                break;
+                case "#tubosI":
+                openTuboI();
+                break;
+                case "#curva":
+                openCurva();
+                break;
+                case "#te":
+                openTe();
+                break;
+                case "#conexoes1":
+                openConexao();
+                break;
+                case "#flanges":
+                openFlange();
+                break;
+            }
+        }
+        
+        function retornoAlert(){
+            
+        }
+        
+        function retornoFocus(){
+            $("#mtsBarra").focus();
+        }
+        function retornoAlertTub(){
+           
+        }
+        
+        function retornoFocusTubo(){
+            $("#mtsTubo").focus();
+        }
+        
+        function retornoAlertTubi(){
+                  }
+        
+        function retornoFocusTuboi(){
+            $("#mtsTuboi").focus();
+        }
+        
+        function openBarraC() {
+            
+            var numbers = { 6.35:6.35, 7.94:7.94,9.53:9.53, 11.11:11.11, 12.70:12.70,14.29:14.29, 15.88:15.88,17.46: 17.46, 19.05: 19.05, 20.64:20.64,22.23:22.23,23.81:23.81,25.40:25.40,26.99:26.99,28.58:28.58,30.16:30.16,31.75:31.75,33.34:33.34,34.93:34.93,36.51:36.51,38.10:38.10,39.69:39.69,41.28:41.28,42.86:42.86,44.45:44.45,46.04:46.04,47.63:47.63,49.21:49.21,50.80:50.80,52.39:52.39,53.98:53.98,55.56:55.56,57.15:57.15,58.73:58.73,60.33:60.33,61.91:61.91,63.50:63.50,65.09:65.09,66.68:66.68,68.26:68.26,69.85:69.85,71.44:71.44,73.03:73.03,74.61:74.61,76.20:76.20,79.38:79.38,82.55:82.55,85.73:85.73,88.90:88.90,92.08:92.08,95.25:95.25,98.43:98.43,101.60:101.60,104.77:104.77,107.95:107.95,111.12:111.12,114.30:114.30,117.47:117.47,120.65:120.65,123.82:123.82,127.00:127.00,133.35:133.35,139.70:139.70,146.05:146.05,152.40:152.40,158.75:158.75,165.10:165.10,171.45:171.45,177.80:177.80,184.15:184.15,190.50:190.50,196.85:196.85,203.20:203.20,215.90:215.90,215.90:215.90,222.25:222.25,228.60:228.60,234.95:234.95,241.30:241.30,247.65:247.65,254.00:254.00,260.35:260.35,266.70:266.70,273.05:273.05,279.40:279.40,285.75:285.75,292.70:292.70,298.45:298.45,304.80:304.80,317.50:317.50,330.20:330.20,342.90:342.90,355.60:355.60,368.30:368.30,381.00:381.00,393.70:393.70,406.40:406.40,431.80:431.80,457.20:457.20,482.60:482.60,508.00:508.00 };
+            SpinningWheel.addSlot({ Redonda: 'Redonda', Quadrada: 'Quadrada', Sextavado: 'Sextavado' }, 'left');
+            SpinningWheel.addSlot(numbers, 'right');
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            
+            SpinningWheel.open();
+        }
+        
+        function openTuboC(){
+            var dExt = { '':'Externo',13.7:'1/4"',17.1:'3/8"',21.3:'1/2"',26.7:'3/4"',33.4:'1"',42.2:'1.1/4"',48.3:'1.1/2"',60.3:'2"',73.0:'2.1/2"',88.9:'3"',101.6:'3.1/2"',114.3:'4"',141.3:'5"',168.3:'6"',219.1:'8"',273.0:'10"',323.8:'12"',355.6:'14"',406.4:'16"',457.0:'18"',508.0:'20"',559.0:'22"',610.0:'24"'};
+            
+            var Parede = { '':'Parede/API 5L/Sched','9.22|2.24|1':"2.24 - STD 40",'7.66|3.02|2':"3.02 - XS 80",'12.48|2.31|3':"2.31 - STD 40",'10.70|3.20|4':"3.20 - XS 80",'15.76|2.77|5':"2.77 - STD 40",'13.84|3.73|6':"3.73 - XS 80",'11.74|4.78|7':"4.78 - - 160",'6.36|7.47|8':"7.47 - XXS -",'20.96|2.87|9':"2.87 - STD 40",'18.88|3.91|10':"3.91 - XS 80",'15.58|5.56|11':"5.56 - - 160",'11.06|7.82|12':"7.82 - XXS -",'26.64|3.38|13':"3.38 - STD 40",'24.30|4.55|14':"4.55 - XS 80",'20.70|6.35|15':"6.35 - - 160",'15.22|9.09|16':"9.09 - XXS -",'35.08|3.56|17':"3.56 - STD 40",'32.50|4.85|18':"4.85 - XS 80",'29.50|6.35|19':"6.35 - - 160",'22.80|9.|20':"9.70 - XXS -",'40.94|3.68|21':"3.68 - STD 40",'38.14|5.08|22':"5.08 - XS 80",'34.02|7.14|23':"7.14 - - 160",'28.00|10.15|24':"10.15 - XXS -",'52.48|3.91|25':"3.91 - STD 40",'49.22|5.54|26':"5.54 - XS 80",'42.82|8.74|27':"8.74 - - 160",'38.16|11.07|28':"11.07 - XXS -",'62.68|5.16|29':"5.16 - STD 40",'58.98|7.01|30':"7.01 - XS 80",'53.94|9.53|31':"9.53 - - 160",'44.96|14.02|32':"14.02 - XXS -",'77.92|5.49|33':"5.49 - STD 40",'73.66|7.62|34':"7.62 - XS 80",'66.64|11.13|35':"11.13 - - 160",'58.42|15.24|36':"15.24 - XXS -",'90.12|5.74|37':"5.74 - STD 40",'85.44|8.08|38':"8.08 - XS 80",'102.26|6.02|39':"6.02 - STD 40",'97.18|8.56|40':"8.56 - XS 80",'92.04|11.13|41':"11.13 - - 120",'87.32|13.49|42':"13.49 - - 160",'80.06|17.12|43':"17.12 - XXS -",'128.20|6.55|44':"6.55 - STD 40",'122.24|9.53|45':"9.53 - XS 80",'115.90|12.70|46':"12.70 - - 120",'109.54|15.88|47':"15.88 - - 160",'103.20|19.05|48':"19.05 - XXS -",'155.60|6.35|49':"6.35 - - -",'154.08|7.11|50':"7.11 - STD 40",'146.36|10.97|51':"10.97 - XS 80",'139.76|14.27|52':"14.27 - - 120",'131.78|18.26|53':"18.26 - - 160",'124.40|21.95|54':"21.95 - - -",'206.40|6.35|55':"6.35 - - 20",'205.02|7.04|56':"7.04 - - 30",'203.26|7.92|57':"7.92 - - -",'202.74|8.18|58':"8.18 - STD 40",'198.48|10.31|59':"10.31 - - 60",'193.70|12.70|60':"12.70 - - 80",'188.92|15.09|61':"15.09 - XS 100",'182.58|18.26|62':"18.26 - - 120",'181.00|19.05|63':"19.05 - - -",'177.86|20.62|64':"20.62 - - 140",'174.64|22.23|65':"22.23 - XXS -",'173.08|23.01|66':"23.01 - - 160",'260.30|6.35|67':"6.35 - - 20",'257.45|7.80|68':"7.80 - - 30",'254.46|9.27|69':"9.27 - STD 40",'247.60|12.70|70':"12.70 - XS 60",'242.82|15.09|71':"15.09 - - 80",'236.48|18.26|146':"18.26 - - 100",'230.12|21.44|72':"21.44 - - 120",'222.20|25.40|73':"25.40 - XXS 140",'215.84|28.58|74':"28.58 - - 160",'311.14|6.35|75':"6.35 - - 20",'307.04|8.38|76':"8.38 - - 30",'304.74|9.53|77':"9.53 - STD -",'303.18|10.31|78':"10.31 - - 40",'298.40|12.70|79':"12.70 - XS -",'295.26|14.27|80':"14.27 - - 60",'288.84|17.48|81':"17.48 - - 80",'282.56|20.62|82':"20.62 - - -",'280.92|21.44|83':"21.44 - - 100",'273.00|25.40|84':"25.40 - XXS 120",'257.16|33.32|85':"33.32 - - 160",'342.90|6.35|86':"6.35 - - 10",'339.76|7.92|87':"7.92 - - 20",'336.54|9.53|88':"9.53 - STD 30",'333.34|11.13|89':"11.13 - - 40",'330.20|12.70|90':"12.70 - XS -",'325.42|15.09|91':"15.09 - - 60",'317.50|19.05|92':"19.05 - - 80",'307.94|23.83|93':"23.83 - - 100",'300.02|27.79|94':"27.79 - - 120",'292.10|31.75|95':"31.75 - - 140",'284.18|35.71|96':"35.71 - - 160",'393.70|6.35|97':"6.35 - - 10",'390.56|7.92|98':"7.92 - - 20",'387.36|9.53|99':"9.53 - STD 30",'381.00|12.70|100':"12.70 - XS 40",'373.08|16.66|101':"16.66 - - 60",'363.52|21.44|102':"21.44 - - 80",'354.02|26.19|103':"26.19 - - 100",'344.48|30.96|104':"30.96 - - 120",'333.34|36.53|105':"36.53 - - 140",'325.42|40.49|106':"40.49 - - 160",'444.30|6.35|107':"6.35 - - 10",'441.16|7.92|108':"7.92 - - 20",'437.96|9.53|109':"9.53 - STD -",'434.74|11.13|110':"11.13 - - 30",'431.60|12.70|111':"12.70 - XS -",'428.46|14.27|112':"14.27 - - 40",'418.90|19.05|113':"19.05 - - 60",'409.34|23.83|114':"23.83 - - 80",'398.28|29.36|115':"29.36 - - 100",'387.16|34.93|116':"34.93 - - 120",'377.66|39.67|117':"39.67 - - 140",'366.50|45.24|118':"45.24 - - 160",'495.30|6.35|119':"6.35 - - 10",'488.96|9.52|120':"9.52 - STD 20",'482.60|12.70|121':"12.70 - XS 30",'477.82|15.09|122':"15.09 - - 40",'466.76|20.62|123':"20.62 - - 60",'455.62|26.19|124':"26.19 - - 80",'407.98|50.01|125':"50.01 - - 160",'546.30|6.35|126':"6.35 - - 10",'539.96|9.52|127':"9.52 - STD 20",'533.60|12.70|128':"12.70 - XS 30",'527.24|15.88|129':"15.88 - - -",'514.56|22.22|130':"22.22 - - 60",'501.86|28.57|131':"28.57 - - 80",'489.16|34.92|132':"34.92 - - 100",'476.46|41.27|133':"41.27 - - 120",'463.76|47.62|134':"47.62 - - 140",'451.06|53.97|135':"53.97 - - 160",'597.30|6.35|136':"6.35 - - 10",'590.96|9.52|137':"9.52 - STD 20",'584.60|12.70|138':"12.70 - XS -",'581.46|14.27|139':"14.27 - - 30",'575.04|17.48|140':"17.48 - - 40",'560.78|24.61|141':"24.61 - - 60",'548.08|30.96|142':"30.96 - - 80",'532.22|38.89|143':"38.89 - - 100",'517.96|46.02|144':"46.02 - - 120",'505.26|52.37|145':"52.37 - - 140"};
+            
+            SpinningWheel.addSlot(dExt, 'left',13.7);
+            SpinningWheel.addSlot(Parede, 'right','9.22|2.24|1');
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            SpinningWheel.open();
+        }
+        function openTuboI(){
+            var dExt = { '':'Externo','10.2':'1/8"','13.72':'1/4"','17.15':'3/8"','21.34':'1/2"','26.67':'3/4"','33.4':'1"','42.16':'1.1/4"','48.26':'1.1/2"','60.33':'2"','73.03':'2.1/2"','88.9':'3"','101.6':'3.1/2"','114.3':'4 "','141.3':'5"','168.28':'6"','219.08':'8"','273.05':'10"','323.85':'12"','355.6':'14"','406.4':'16"','457.2':'18"','508':'20"','609.6':'24"'};
+            var Parede = { '':'Parede / Schedule','1.65':'1.65','1.24':'1.24','1.50':'1.50','1.65':'1.65','1.73':'1.73','2.00':'2.00','2.11':'2.11','2.24':'2.24','2.31':'2.31','2.41':'2.41','2.50':'2.50','2.77':'2.77','2.87':'2.87','3.00':'3.00','3.02':'3.02','3.05':'3.05','3.20':'3.20','3.38':'3.38','3.40':'3.40','3.50':'3.50','3.56':'3.56','3.68':'3.68','3.73':'3.73','3.76':'3.76','3.91':'3.91','3.96':'3.96','4.00':'4.00','4.16':'4.16','4.19':'4.19','4.20':'4.20','4.55':'4.55','4.57':'4.57','4.75':'4.75','4.78':'4.78','4.85':'4.85','5.00':'5.00','5.08':'5.08','5.49':'5.49','5.54':'5.54','5.74':'5.74','6.02':'6.02','6.35':'6.35','6.50':'6.50','6.55':'6.55','7.01':'7.01','7.11':'7.11','7.14':'7.14','7.62':'7.62','8.08':'8.08','8.18':'8.18','8.56':'8.56','8.71':'8.71','9.27':'9.27','9.53':'9.53','10.97':'10.97','11.13':'11.13','12.70':'12.70','13.49':'13.49','15.88':'15.88','18.24':'18.24','23.02':'23.02','28.57':'28.57','33.34':'33.34'};
+            
+            SpinningWheel.addSlot(dExt, 'left','10.2');
+            SpinningWheel.addSlot(Parede, 'right',1.65);
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            SpinningWheel.open();
+            
+        }
+        
+        function openChapa(){
+            var espessura = {'':'Esp','50.80':'50.80','44.45':'44.45','38.10':'38.10','31.75':'31.75','25.40':'25.40','22.22':'22,22','19.05':'19.05','15.87':'15,87','12.70':'12.70','11.11':'11.11','9.53':'9.53','7.93':'7,93','6.35':'6.35','5.66':'5.66','4.76':'4.76','4.37':'4.37','3.97':'3.97','3.57':'3.57','3.18':'3.18','2.78':'2.78','2.37':'2.37','1.98':'1.98','1.79':'1.79','1.56':'1.56','1.43':'1.43','1.27':'1.27','1.11':'1.11','0.95':'0.95','0.87':'0.87','0.79':'0.79','0.71':'0.71','0.64':'0.64','0.56':'0.56','0.48':'0.48','0.44':'0.44','0.40':'0.40'};
+            
+            var comprimento = {'':'Comp','1000':'1m','1200':'1,2m','1500':'1,5m'};
+            
+            var altura = {'':'Largura','1':'1m','2':'2m','3':'3m'};
+            
+            SpinningWheel.addSlot(espessura, 'left','50.80');
+            SpinningWheel.addSlot(altura, 'left','1');
+            SpinningWheel.addSlot(comprimento, 'left','1000');
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            SpinningWheel.open();
+        }
+        
+        function openConexao(){
+            var tipoC = {1:'Curva',2:'TE',3:'Redutor',4:'Tampão'};
+            var tipo = {'1_1':'45º R. Longo','1_2':'90º R. Longo','1_3':'180º R. Longo','1_4':'90º R. Curto','1_5':'180º R. Curto','2_1':'TE Reto','2_2':'TE Com Redução','3_1':'Redução Concêntrica','3_2':'Redução Excêntrica','4_1':'Tampão'};
+            var DNominal = {1:'½',2:'¾',3:'1',4:'1¼',5:'1½',6:'2',7:'2½',8:'3',9:'3½',10:'4',11:'5',12:'6',13:'8',14:'10',15:'12',16:'14',17:'16',18:'18',19:'20',20:'24'};
+           
+            SpinningWheel.addSlot(tipoC, 'left');
+            SpinningWheel.addSlot(tipo, 'left');
+            SpinningWheel.addSlot(DNominal, 'right');
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            SpinningWheel.open();
+            
+        }
+        
+        function openFlange(){
+            var tipoF = {'':'Tipo',1:'Cego',2:'Sobreposto',3:'Com pescoço',4:'Lap-joint'};
+            var pressaoF = {'':'Pressão',1:'150',2:'300',3:'600',4:'900',5:'1500'};
+            var dimensaoF = {'':'Dimensão',1:'1/2',2:'3/4',3:'1',4:'1 1/4',5:'1 1/2',6:'2',7:'2 1/2',8:'3',9:'3 1/2',10:'4',11:'5',12:'6',13:'8',14:'10',15:'12',16:'14',17:'16',18:'18',19:'20',20:'24'};
+            
+            SpinningWheel.addSlot(tipoF, 'left',1);
+            SpinningWheel.addSlot(pressaoF, 'left',1);
+            SpinningWheel.addSlot(dimensaoF, 'right',1);
+            SpinningWheel.setCancelAction(cancel);
+            SpinningWheel.setDoneAction(done);
+            SpinningWheel.open();
+            
+        }
+        
+        function done() {
+            //$("#frmCotacao").fadeIn("normal");
+            var ret = $.mobile.path.parseUrl(location.href);
+            $("#pagAnt").val(ret.hash);
+            location.href="#cotar";
+        }
+        
+        function cancel() {
+          location.href="#menu";
+        }
+    
+    </script>
+    
+    
+    <style>
+        body{
+            background-color:#FFF;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+        }
+        .total{
+            position:absolute;
+            left:10px;
+            top:60px;
+            font-size:13px;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            color:#FFF;
+            z-index:10;
+        }
+        .var{
+            font-size:13px;
+            color:#FFF;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+        }
+        .titForm{
+            font-size:13px;
+            color:#FFF;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+        }
+        .titulo{
+            text-decoration:underline;
+            color:#FFF;
+            font-size:13px;
+            text-align:center;
+            padding:5px;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+        }
+        .menuLi{
+            margin-top:-15px;
+            padding:0px;
+            position:relative;
+            margin-left:-16px;
+            width:100%;
+        }
+        .menuLi li{
+            text-align:left;
+            text-decoration:none;
+            list-style-type:none;
+            border:1px solid #000;
+            padding:3px 22px 3px 8px;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            width:100%;
+            background-color:#888;
+        }
+        .menuLi li:active{
+            background-color: #222 !important;
+        }
+        .menuLi a{
+            text-align:center;
+            text-decoration:none;
+            font-weight:none;
+            font-size:13px !important;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            color:#FFF !important;
+        }
+        .menuLi a:visited{
+            text-align:center;
+            text-decoration:none;
+            font-weight:none;
+            font-size:13px !important;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            color:#FFF !important;
+        }
+
+        .menuLi a:hover{
+            text-align:center;
+            text-decoration:none;
+            font-weight:none;
+            font-size:13px;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            color:#FFF !important;
+        }
+        .menuLi a:active{
+            text-align:center;
+            text-decoration:none;
+            font-weight:none;
+            font-size:13px;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            color:#FFF !important;
+        }
+        .hea{
+            font-size:16px !important;
+            padding:7px;
+        }
+    </style>
+               
+        
+  </head>
+  <body onload="onBodyLoad()">
+      
+      <div data-role="page" id="home" align="center">
+          <img src="imagens/home.png" id="homeImg"/>
+      </div>
+      
+      
+      <div data-role="page" id="patrocinadores" style="display:none;" align="center">
+          <img src="imagens/patrocinadores.png" id="patrocinadores"/>
+      </div>
+      
+      
+      
+      <div data-role="page" id="menu" data-theme="a">
+          <div data-role="header" align="center"class="hea">
+              <b>LINHA DE PRODUTOS AÇOTUBO</b>
+          </div>
+          <div data-role="content" align="left">
+             <!-- <ul class="menuLi">
+                  <a href="#barraC" data-transition="flip"><li>
+                      BARRAS DE AÇO CARBONO
+                                        </li></a>
+
+                  <a href="#tuboC" data-transition="flip">
+<li>
+                                            TUBOS CARBONO                      
+                  </li></a>
+                  <a href="#chapasI" data-transition="flip"><li>
+                    
+                      CHAPAS INOXIDÁVEL
+                    
+                  </li></a>
+                  <a href="#tubosI" data-transition="flip"><li>
+                    
+                      TUBOS INOXIDÁVEL
+                    
+                  </li></a>
+                  <a href="#conexoes1" data-transition="flip"><li>
+                      
+                      CONEXÕES
+                      
+                  </li></a>
+                  <a href="#flanges" data-transition="flip"><li>
+                      
+                      FLANGES
+                      
+                  </li></a>
+              </ul>-->
+              <ul class="menuLi">
+                  <a href="#barraC" data-transition="flip"><li>
+                      <img src="icones/barracarbono.png" class="icones"/> BARRAS DE AÇO CARBONO
+                  </li></a>
+                  <a href="#tuboC" data-transition="flip"><li>
+                      <img src="icones/tubocarbono.png" class="icones"/> TUBOS CARBONO 
+                  </li></a>
+                  <a href="#chapasI" data-transition="flip"><li>
+                      <img src="icones/chapa.png" class="icones"/>  CHAPAS INOXIDÁVEL
+                  </li></a>
+                  <a href="#tubosI" data-transition="flip"><li>
+                      <img src="icones/tuboinox.png" class="icones"/> TUBOS INOXIDÁVEL              </li></a>
+                  <a href="#conexoes1" data-transition="flip"><li>
+                      <img src="icones/conexoes.png" class="icones"/> CONEXÕES
+                  </li></a>
+                  <a href="#flanges" data-transition="flip"><li>
+                      <img src="icones/flange.png" class="icones"/> FLANGES
+                  </li></a>
+              </ul>
+          </div>
+          <div align="center" style="padding-bottom:10px;margin-top:-30px;" data-role="footer">
+              <img src="imagens/facebook.png" class="facebook"/>
+              <img src="imagens/twitter.png" class="twitter"/>
+              <img src="imagens/linkedin.png" class="linkedin"/>
+              <img src="imagens/wordpress.png" class="wordpress"/>
+              <img src="imagens/youtube.png" class="youtube"/>
+          </div>
+      </div>
+      <div data-role="page" class="produto" id="barraC" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>Barras de Aço</h1>
+          </div>
+          <div data-role="content" align="center">
+              <input type="hidden" id="conteudoPicker"/>
+              <input type="hidden" id="conteudoPickerDescr"/>
+              
+              <img src="imagens/redonda.png" class="ima" id="imgBarra"/>
+              <div id="barraVar" class="var">6.35</div>
+              <div id="barraTotal" class="total">Total<br>0.25 Kg/m</div>
+              <div class="textoInput">
+                  <label for="mtsBarra">Metros</label>
+                  <input type="number" id="mtsBarra" value="" class="ui-input-text" data-role="none"/>
+                  <button id="btnBarra" class="btnClick" data-theme="a" data-role="none">Calcular</button>
+              </div>
+              
+              <div class="totalMetros" id="totalMetros">
+                  
+              </div>
+              <input type="hidden" id="barTotal" value="Redonda,6.35"/>
+          </div>
+          
+      </div>
+      <div data-role="page" class="produto" id="tuboC" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>Tubos</h1>
+          </div>
+          <div data-role="content" align="center">
+              <img src="imagens/Tubo.png" class="ima" id="imgTubo"/>
+              <div id="tuboVarA" class="var">&nbsp;</div>
+              <div id="tuboVarB" class="var">&nbsp;</div>
+              <div id="tuboVarC" class="var">&nbsp;</div>
+              <div id="tuboTotal" class="total">&nbsp;</div>
+              <div class="textoInput">
+                  <label for="mtsTubo">Metros</label>
+                  <input type="number" id="mtsTubo" value="" class="ui-input-text" data-role="none"/>
+                  <button id="btnTubo" data-theme="a" class="btnClick" data-role="none">Calcular</button>
+              </div>
+              
+              <div class="totalMetros" id="totalMetrosTubo">
+                  
+              </div>
+              <input type="hidden" id="tuboTotalVl" value=""/>
+          </div>
+      </div>
+      <div data-role="page" class="produto" id="chapasI" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>Chapa inox</h1>
+          </div>
+          <div data-role="content" align="center">
+              <img src="imagens/Chapa.png"  class="ima" id="imgChapa"/>
+              <div id="larguraChapa" class="varChapa"></div>
+              <div id="alturaChapa" class="varChapa"></div>
+              <div id="chapaTotal" class="total">&nbsp;</div>
+              <!--<div class="textoInput">
+                  <label for="mtsChapa">Metros</label>
+                  <input type="number" id="mtsChapa" value="" class="ui-input-text" data-role="none"/>
+                  <button id="btnChapa" data-theme="a" class="btnClick" data-role="none">Calcular</button>
+              </div>
+              
+              <div class="totalMetrosC" id="totalMetrosChapa">
+                  
+              </div>
+              <input type="hidden" id="chapaTotalVl" value=""/>-->
+          </div>
+      </div>
+      
+      <div data-role="page" class="produto" id="tubosI" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>Tubo inox</h1>
+          </div>
+          <div data-role="content" align="center">
+              <img src="imagens/Tubo.png" class="ima" id="imgTuboi"/>
+              <div id="tuboVarAi" class="var">&nbsp;</div>
+              <div id="tuboVarBi" class="var">&nbsp;</div>
+              <div id="tuboVarCi" class="var">&nbsp;</div>
+              <div id="tuboTotali" class="total">&nbsp;</div>
+              <div class="textoInput">
+                  <label for="mtsTuboi">Metros</label>
+                  <input type="number" id="mtsTuboi" value="" class="ui-input-text" data-role="none"/>
+                  <button id="btnTuboi" class="btnClick" data-theme="a" data-role="none">Calcular</button>
+              </div>
+              
+              <div class="totalMetros" id="totalMetrosTuboi">
+                  
+              </div>
+              <input type="hidden" id="tuboTotalVli" value=""/>
+          </div>
+      </div>
+      
+      <div data-role="page" class="produto" id="conexoes1" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>Conexões</h1>
+          </div>
+          <div data-role="content" align="center">
+              <img src="imagens/conexoes/tampao.png" align="center" class="imagemCon" id="imgCurva"/>
+              <div id="tampaoe" class="divCon"></div>
+              <div id="c45b1" class="divCon"></div>
+              <div id="c45b2" class="divCon"></div>
+              <div id="c90a1" class="divCon"></div>
+              <div id="c90a2" class="divCon"></div>
+              <div id="c180a1" class="divCon"></div>
+              <div id="c180a2" class="divCon"></div>
+              <div id="c180k" class="divCon"></div>
+              <div id="c90d1" class="divCon"></div>
+              <div id="c90d2" class="divCon"></div>
+              <div id="c180d1" class="divCon"></div>
+              <div id="c180d2" class="divCon"></div>
+              <div id="c180v" class="divCon"></div>
+              <div id="tec1" class="divTe"></div>
+              <div id="tec2" class="divTe"></div>
+              <div id="tec3" class="divTe"></div>
+              <div id="tem" class="divTe"></div>
+              <div id="redh" class="divTe"></div>
+              <div id="dExternoCon" class="divCon">D. Ext.: </div>
+          </div>
+     </div>
+            
+      <div data-role="page" class="produto" id="flanges" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="#menu" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip">Voltar</a>
+              <h1>FLANGES</h1>
+          </div>
+          <div data-role="content" align="center">
+              <img src="imagens/conexoes/cego.png" class="imagemFlange" id="imgFlange"/>
+              <div id="var_d" class="divFlange"></div>
+              <div id="var_g" class="divFlange"></div>
+              <div id="var_m" class="divFlange"></div>
+              <div id="var_b" class="divFlange"></div>
+              <div id="var_l" class="divFlange"></div>
+              <div id="var_k" class="divFlange"></div>
+              <div id="var_a" class="divFlange"></div>
+              <div id="var_h" class="divFlange"></div>
+              <div id="var_n" class="divFlange"></div>
+              <div id="var_o" class="divFlange"></div>
+              <div id="var_t" class="divFlange"></div>
+              <div id="var_u" class="divFlange"></div>
+              <div id="var_r" class="divFlange"></div>
+              <div id="var_j" class="divFlange"></div>
+              <div id="var_c" class="divFlange"></div>
+              <div id="var_f" class="divFlange"></div>
+              <div id="var_v" class="divFlange"></div>
+              <div id="pesoFlange" class="divFlange"></div>
+              <div id="furosFlange" class="divFlange"></div>
+          </div>
+      </div>
+      <div data-role="page" id="cotar" data-dom-cache="false" data-theme="a" data-cache="never">
+          <div data-role="header" data-position="inline">
+              <a href="javascript:history.back(1);" class="voltar" data-direction="reverse" data-icon="back" data-transition="flip" id="voltarForm">Voltar</a>
+              <h1>Cotação</h1>
+          </div>
+          <div data-role="content" align="center">
+      <div id="frmCotacao" class="formulario" style="margin-left:20px;">
+              <div data-role="fieldcontain">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                  <td class="titForm">Nome completo:</td>  
+                  <td><input type="text" name="p1" id="txtNome" value="" class="inputCota" size="26" data-role="none"/></td>
+              </tr>
+              <tr>
+                  <td class="titForm">E-mail:</td>  
+                  <td><input type="email" name="p2" id="txtEmail" value="" class="inputCota" size="26" data-role="none"/></td>
+              </tr>
+              <tr>
+                  <td class="titForm">Telefone:</td>  
+                  <td>(<input type="tel" name="p3" id="txtDDD" maxlength="2" size="2" data-role="none" value=""/>)
+                      <input type="tel" name="p4" id="txtFone" maxlength="8" class="inputCota" size="18" value="" data-role="none"/></td>
+              </tr>
+              <input type="hidden" name="p5" id="txtMaterial" />
+              <input type="hidden" name="p6" id="txtQtde" />
+              <tr>
+                  <td colspan="2" align="center"><button id="btnCotacao" class="btnClick" data-theme="a" data-role="none">Enviar cotação</button></td>  
+              </tr>
+          </table>
+         <input type="hidden" id="pagAnt" value=""/>
+          <div id="retornoSubmit"></div>
+        </div>
+          
+          </div>
+              </DIV>
+      </div>
+  </body>
+</html>
